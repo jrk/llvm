@@ -57,3 +57,5 @@ tools/llvm-config/LibDeps.txt.tmp
 include/llvm/Support/DataTypes.h
 projects/sample/Makefile.common
 tools/llvm-config/llvm-config.in
+build-Debug+Asserts
+_build
