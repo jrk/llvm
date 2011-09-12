@@ -63,3 +63,5 @@ projects/sample/Makefile.common
 tools/llvm-config/llvm-config.in
 build-Debug+Asserts
 _build
+docs/doxygen.cfg
+configure.out
