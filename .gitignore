@@ -64,4 +64,7 @@ tools/llvm-config/llvm-config.in
 build-Debug+Asserts
 _build
 docs/doxygen.cfg
+docs/doxygen/
+docs/*.tar.gz
+docs/ocamldoc/
 configure.out
