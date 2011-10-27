@@ -64,3 +64,5 @@ docs/doxygen/
 docs/*.tar.gz
 docs/ocamldoc/
 configure.out
+bindings/ocaml/llvm/META.llvm
+Makefile*.config
