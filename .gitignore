@@ -41,6 +41,7 @@ projects/*
 build/
 .DS_Store
 Debug+Asserts
+Release+Asserts
 lib/Target/*/*.inc
 include/llvm/Config/*.h
 include/llvm/Config/*.def
