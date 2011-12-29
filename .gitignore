@@ -37,6 +37,35 @@ projects/*
 !projects/CMakeLists.txt
 !projects/Makefile
 # Clang, which is tracked independently.
-tools/clang
+#tools/clang
 # LLDB, which is tracked independently.
 tools/lldb
+
+#jrk
+Release+Asserts
+Debug+Asserts
+lib/target/*/*.inc
+config.status
+config.log
+configure.out
+.DS_Store
+META.llvm
+docs/ocamldoc.tar.gz
+docs/doxygen.cfg
+docs/ocamldoc
+_build
+llvm-config.h
+llvm-config.in
+*.def
+llvm.spec
+Makefile.config
+Makefile.llvmbuild
+LibDeps.txt*
+projects/sample/Makefile.common
+projects/sample/Makefile.llvm.config
+tools/llvmc
+include/llvm/Intrinsics.gen
+include/llvm/Support/DataTypes.h
+include/llvm/Config/config.h
+tools/llvm-config/FinalLibDeps.txt
+tools/llvm-config/LibraryDependencies.inc
