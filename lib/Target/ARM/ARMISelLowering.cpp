@@ -7335,6 +7335,10 @@ static SDValue CombineBaseUpdate(SDNode *N,
     unsigned NumVecs = 0;
     if (isIntrinsic) {
       unsigned IntNo = cast<ConstantSDNode>(N->getOperand(1))->getZExtValue();
+
+      // AA: bail out for VST2 to avoid bug
+      if (IntNo == Intrinsic::arm_neon_vst2) continue;
+    
       switch (IntNo) {
       default: assert(0 && "unexpected intrinsic for Neon base update");
       case Intrinsic::arm_neon_vld1:     NewOpc = ARMISD::VLD1_UPD;
