@@ -69,6 +69,14 @@ PTXTargetLowering::PTXTargetLowering(TargetMachine &TM)
   // f64 truncstore => trunc + store
 
   setTruncStoreAction(MVT::f64, MVT::f32, Expand);
+  
+  // truncstore => trunc + store for other types
+  // TODO: this shouldn't be necessary. PTX st op takes arbitrary size <= register size and truncates, but instruction selection is failing for this case
+  for (unsigned frombits = 64; frombits >= 8; frombits /= 2) {
+      for (unsigned tobits = frombits / 2; tobits >= 8; tobits /= 2) {
+          setTruncStoreAction(MVT::getIntegerVT(frombits), MVT::getIntegerVT(tobits), Expand);
+      }
+  }
 
   // sign_extend_inreg => sign_extend
 
