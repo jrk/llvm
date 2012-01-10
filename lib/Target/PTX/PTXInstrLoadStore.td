@@ -276,3 +276,12 @@ defm LOCALU64  : PTX_LOCAL_LD_ST<".u64", RegI64>;
 defm LOCALF32  : PTX_LOCAL_LD_ST<".f32", RegF32>;
 defm LOCALF64  : PTX_LOCAL_LD_ST<".f64", RegF64>;
 
+
+// PTX atomics
+def PTX_RED_GLOBAL_ADD_S32
+  : InstPTX<(outs), (ins MEMri64:$a, RegI32:$x), "red.global.add.s32\t[$a], $x",
+                           [(int_ptx_red_global_add_s32 ADDRri64:$a, RegI32:$x)]>;
+
+def PTX_RED_SHARED_ADD_S32
+  : InstPTX<(outs), (ins MEMri64:$a, RegI32:$x), "red.shared.add.s32\t[$a], $x",
+                           [(int_ptx_red_shared_add_s32 ADDRri64:$a, RegI32:$x)]>;

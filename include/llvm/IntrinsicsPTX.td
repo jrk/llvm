@@ -90,3 +90,12 @@ def int_ptx_read_pm3         : PTXReadSpecialRegisterIntrinsic_r32
 let TargetPrefix = "ptx" in
   def int_ptx_bar_sync : Intrinsic<[], [llvm_i32_ty], []>,
                          GCCBuiltin<"__builtin_ptx_bar_sync">;
+
+let TargetPrefix = "ptx" in {
+  def int_ptx_red_global_add_s32 :
+    Intrinsic<[], [llvm_ptr_ty, llvm_i32_ty], [IntrReadWriteArgMem]>,
+    GCCBuiltin<"__builtin_ptx_red_global_add_s32">;
+  def int_ptx_red_shared_add_s32 :
+    Intrinsic<[], [llvm_ptr_ty, llvm_i32_ty], [IntrReadWriteArgMem]>,
+    GCCBuiltin<"__builtin_ptx_red_shared_add_s32">;
+}
