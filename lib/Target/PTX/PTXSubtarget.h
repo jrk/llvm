@@ -101,11 +101,15 @@ class StringRef;
       bool supportsPTX23() const { return PTXVersion >= PTX_VERSION_2_3; }
 
       bool fdivNeedsRoundingMode() const {
-        return (PTXTarget >= PTX_SM_1_3 && PTXTarget < PTX_LAST_SM) ||
-               (PTXTarget >= PTX_COMPUTE_1_3 && PTXTarget < PTX_LAST_COMPUTE);
+          // For PTX ISA version 1.4 and later, one of .approx, .full, or .rnd is required.
+          return true;
+        // return (PTXTarget >= PTX_SM_1_1 && PTXTarget < PTX_LAST_SM) ||
+        //        (PTXTarget >= PTX_COMPUTE_1_1 && PTXTarget < PTX_LAST_COMPUTE);
       }
 
       bool fmadNeedsRoundingMode() const {
+          // In PTX ISA versions 1.4 and later, a rounding modifier is required for mad.f64.
+          // In PTX ISA versions 2.0 and later, a rounding modifier is required for mad.f32 for sm_20 targets.
         return (PTXTarget >= PTX_SM_1_3 && PTXTarget < PTX_LAST_SM) ||
                (PTXTarget >= PTX_COMPUTE_1_3 && PTXTarget < PTX_LAST_COMPUTE);
       }
