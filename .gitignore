@@ -44,7 +44,7 @@ tools/lldb
 #jrk
 Release+Asserts
 Debug+Asserts
-lib/target/*/*.inc
+lib/Target/*/*.inc
 config.status
 config.log
 configure.out
