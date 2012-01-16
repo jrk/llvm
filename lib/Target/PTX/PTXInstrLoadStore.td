@@ -282,6 +282,10 @@ def PTX_RED_GLOBAL_ADD_S32
   : InstPTX<(outs), (ins MEMri64:$a, RegI32:$x), "red.global.add.s32\t[$a], $x",
                            [(int_ptx_red_global_add_s32 ADDRri64:$a, RegI32:$x)]>;
 
+def PTX_RED_GLOBAL_ADD_F32
+  : InstPTX<(outs), (ins MEMri64:$a, RegF32:$x), "red.global.add.f32\t[$a], $x",
+                           [(int_ptx_red_global_add_f32 ADDRri64:$a, RegF32:$x)]>;
+
 def PTX_RED_SHARED_ADD_S32
   : InstPTX<(outs), (ins MEMri64:$a, RegI32:$x), "red.shared.add.s32\t[$a], $x",
                            [(int_ptx_red_shared_add_s32 ADDRri64:$a, RegI32:$x)]>;

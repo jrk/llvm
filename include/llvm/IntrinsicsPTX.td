@@ -95,6 +95,9 @@ let TargetPrefix = "ptx" in {
   def int_ptx_red_global_add_s32 :
     Intrinsic<[], [llvm_ptr_ty, llvm_i32_ty], [IntrReadWriteArgMem]>,
     GCCBuiltin<"__builtin_ptx_red_global_add_s32">;
+  def int_ptx_red_global_add_f32 :
+    Intrinsic<[], [llvm_ptr_ty, llvm_float_ty], [IntrReadWriteArgMem]>,
+    GCCBuiltin<"__builtin_ptx_red_global_add_f32">;
   def int_ptx_red_shared_add_s32 :
     Intrinsic<[], [llvm_ptr_ty, llvm_i32_ty], [IntrReadWriteArgMem]>,
     GCCBuiltin<"__builtin_ptx_red_shared_add_s32">;
