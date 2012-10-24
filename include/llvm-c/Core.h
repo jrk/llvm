@@ -259,6 +259,42 @@ typedef enum {
 } LLVMOpcode;
 
 typedef enum {
+    /// *p = v
+    LLVMAtomXchg,
+    /// *p = old + v
+    LLVMAtomAdd,
+    /// *p = old - v
+    LLVMAtomSub,
+    /// *p = old & v
+    LLVMAtomAnd,
+    /// *p = ~old & v
+    LLVMAtomNand,
+    /// *p = old | v
+    LLVMAtomOr,
+    /// *p = old ^ v
+    LLVMAtomXor,
+    /// *p = old >signed v ? old : v
+    LLVMAtomMax,
+    /// *p = old <signed v ? old : v
+    LLVMAtomMin,
+    /// *p = old >unsigned v ? old : v
+    LLVMAtomUMax,
+    /// *p = old <unsigned v ? old : v
+    LLVMAtomUMin
+} LLVMAtomicRMWOp;
+
+typedef enum {
+  LLVMNotAtomic = 0,
+  LLVMUnordered = 1,
+  LLVMMonotonic = 2,
+  // LLVMConsume = 3,  // Not specified yet.
+  LLVMAcquire = 4,
+  LLVMRelease = 5,
+  LLVMAcquireRelease = 6,
+  LLVMSequentiallyConsistent = 7
+} LLVMAtomicOrdering;
+
+typedef enum {
   LLVMVoidTypeKind,        /**< type with no size */
   LLVMHalfTypeKind,        /**< 16 bit floating point type */
   LLVMFloatTypeKind,       /**< 32 bit floating point type */
@@ -2397,6 +2433,13 @@ LLVMValueRef LLVMBuildXor(LLVMBuilderRef, LLVMValueRef LHS, LLVMValueRef RHS,
 LLVMValueRef LLVMBuildBinOp(LLVMBuilderRef B, LLVMOpcode Op,
                             LLVMValueRef LHS, LLVMValueRef RHS,
                             const char *Name);
+LLVMValueRef LLVMBuildCmpXchg(LLVMBuilderRef B,
+                            LLVMAtomicOrdering Order,
+                            LLVMValueRef Ptr, LLVMValueRef Cmp,
+                            LLVMValueRef New);
+LLVMValueRef LLVMBuildAtomicRMW(LLVMBuilderRef B, LLVMAtomicRMWOp Op,
+                            LLVMAtomicOrdering Order,
+                            LLVMValueRef LHS, LLVMValueRef RHS);
 LLVMValueRef LLVMBuildNeg(LLVMBuilderRef, LLVMValueRef V, const char *Name);
 LLVMValueRef LLVMBuildNSWNeg(LLVMBuilderRef B, LLVMValueRef V,
                              const char *Name);

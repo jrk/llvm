@@ -2014,6 +2014,19 @@ LLVMValueRef LLVMBuildBinOp(LLVMBuilderRef B, LLVMOpcode Op,
                                      unwrap(RHS), Name));
 }
 
+LLVMValueRef LLVMBuildCmpXchg(LLVMBuilderRef B,
+                              LLVMAtomicOrdering Order,
+                              LLVMValueRef Ptr, LLVMValueRef Cmp,
+                              LLVMValueRef New) {
+  return wrap(unwrap(B)->CreateAtomicCmpXchg(unwrap(Ptr), unwrap(Cmp), unwrap(New), AtomicOrdering(Order)));
+}
+
+LLVMValueRef LLVMBuildAtomicRMW(LLVMBuilderRef B, LLVMAtomicRMWOp Op,
+                            LLVMAtomicOrdering Order,
+                            LLVMValueRef LHS, LLVMValueRef RHS) {
+  return wrap(unwrap(B)->CreateAtomicRMW(AtomicRMWInst::BinOp(Op), unwrap(LHS), unwrap(RHS), AtomicOrdering(Order)));
+}
+
 LLVMValueRef LLVMBuildNeg(LLVMBuilderRef B, LLVMValueRef V, const char *Name) {
   return wrap(unwrap(B)->CreateNeg(unwrap(V), Name));
 }

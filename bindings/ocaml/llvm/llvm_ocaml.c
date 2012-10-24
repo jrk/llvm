@@ -1960,6 +1960,24 @@ CAMLprim LLVMValueRef llvm_build_ptrdiff(LLVMValueRef LHS, LLVMValueRef RHS,
   return LLVMBuildPtrDiff(Builder_val(B), LHS, RHS, String_val(Name));
 }
 
+/* llvalue -> llvalue -> llvalue -> AtomicOrder.t -> llbuilder -> llvalue */
+CAMLprim LLVMValueRef llvm_build_cmpxchg(LLVMValueRef Ptr,
+                                         LLVMValueRef Cmp,
+                                         LLVMValueRef New,
+                                         value Order,
+                                         value B) {
+  return LLVMBuildCmpXchg(Builder_val(B), Int_val(Order) + LLVMNotAtomic, Ptr, Cmp, New);
+}
+
+/* AtomicRMWOp.t -> llvalue -> llvalue -> AtomicOrder.t -> llbuilder -> llvalue */
+CAMLprim LLVMValueRef llvm_build_atomicrmw(value Op,
+                                           LLVMValueRef LHS,
+                                           LLVMValueRef RHS,
+                                           value Order,
+                                           value B) {
+  return LLVMBuildAtomicRMW(Builder_val(B), Int_val(Op), Int_val(Order) + LLVMNotAtomic, LHS, RHS);
+}
+
 
 /*===-- Memory buffers ----------------------------------------------------===*/
 

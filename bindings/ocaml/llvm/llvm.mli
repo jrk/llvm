@@ -255,6 +255,33 @@ module Opcode : sig
   | Unwind
 end
 
+module AtomicRMWOp : sig
+  type t =
+  | Xchg
+  | Add
+  | Sub
+  | And
+  | Nand
+  | Or
+  | Xor
+  | Max
+  | Min
+  | UMax
+  | UMin
+end
+
+module AtomicOrdering : sig
+  type t =
+  | NotAtomic
+  | Unordered
+  | Monotonic
+  | Consume (* unsupported - left in for enum conversion *)
+  | Acquire
+  | Release
+  | AcquireRelease
+  | SequentiallyConsistent
+end
+
 (** The kind of an [llvalue], the result of [classify_value v].
  * See the various [LLVMIsA*] functions. *)
 module ValueKind : sig
@@ -2332,6 +2359,19 @@ val build_is_not_null : llvalue -> string -> llbuilder -> llvalue
     See the method [llvm::LLVMBuilder::CreatePtrDiff]. *)
 val build_ptrdiff : llvalue -> llvalue -> string -> llbuilder -> llvalue
 
+
+(** {7 Atomics} *)
+(** [build_cmpxchg addr cmp new ordering b] creates a
+    [%old = cmpxchg %addr, %cmp, %new ordering] instruction at the position
+    specified by the instruction builder [b].
+    See the method [llvm::LLVMBuilder::CreateAtomicCmpXchg]. *)
+val build_cmpxchg : llvalue -> llvalue -> llvalue -> AtomicOrdering.t -> llbuilder -> llvalue
+
+(** [build_atomic_rmw op addr val ordering b] creates a
+    [%old = atomicrmw op %addr, %val ordering] instruction at the position
+    specified by the instruction builder [b].
+    See the method [llvm::LLVMBuilder::CreateAtomicRMW]. *)
+val build_atomicrmw : AtomicRMWOp.t -> llvalue -> llvalue -> AtomicOrdering.t -> llbuilder -> llvalue
 
 
 (** {6 Memory buffers} *)

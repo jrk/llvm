@@ -205,6 +205,33 @@ module Opcode  = struct
   | Unwind
 end
 
+module AtomicRMWOp = struct
+  type t =
+  | Xchg
+  | Add
+  | Sub
+  | And
+  | Nand
+  | Or
+  | Xor
+  | Max
+  | Min
+  | UMax
+  | UMin
+end
+
+module AtomicOrdering = struct
+  type t =
+  | NotAtomic
+  | Unordered
+  | Monotonic
+  | Consume (* unsupported - left in for enum conversion *)
+  | Acquire
+  | Release
+  | AcquireRelease
+  | SequentiallyConsistent
+end
+
 module ValueKind = struct
   type t =
   | NullValue
@@ -1160,6 +1187,14 @@ external build_is_not_null : llvalue -> string -> llbuilder -> llvalue
                            = "llvm_build_is_not_null"
 external build_ptrdiff : llvalue -> llvalue -> string -> llbuilder -> llvalue
                        = "llvm_build_ptrdiff"
+
+external build_cmpxchg : llvalue -> llvalue -> llvalue ->
+                         AtomicOrdering.t -> llbuilder -> llvalue
+                       = "llvm_build_cmpxchg"
+
+external build_atomicrmw : AtomicRMWOp.t -> llvalue -> llvalue ->
+                           AtomicOrdering.t -> llbuilder -> llvalue
+                         = "llvm_build_atomicrmw"
 
 
 (*===-- Memory buffers ----------------------------------------------------===*)
